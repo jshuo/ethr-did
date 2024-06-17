@@ -313,7 +313,7 @@ export class EthrDID {
     expiresIn = 86400
   ): Promise<{ kp: KeyPair; txHash: string }> {
     const kp = EthrDID.createKeyPair()
-    this.signer = ES256KSigner(hexToBytes(kp.privateKey), true)
+    this.signer = ES256Signer(hexToBytes(kp.privateKey))
     const txHash = await this.addDelegate(kp.address, {
       delegateType,
       expiresIn,
@@ -328,7 +328,7 @@ export class EthrDID {
     }
     const options = {
       signer: this.signer,
-      alg: 'ES256K-R',
+      alg: 'ES256',
       issuer: this.did,
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
