@@ -11,6 +11,7 @@ import { Base58 } from '@ethersproject/basex'
 import { toUtf8Bytes } from '@ethersproject/strings'
 import { EthrDidController, interpretIdentifier, MetaSignature, REGISTRY } from 'ethr-did-resolver'
 import { Resolvable } from 'did-resolver'
+import { ec as EC } from 'elliptic';
 
 export enum DelegateTypes {
   veriKey = 'veriKey',
@@ -98,8 +99,11 @@ export class EthrDID {
   }
 
   static createKeyPair(chainNameOrId?: string | number): KeyPair {
-    const wallet = Wallet.createRandom()
-    const privateKey = wallet.privateKey
+    const ec = new EC('p256'); // 'p256' is another name for secp256r1
+
+// Generate a key pair
+    const keyPair = ec.genKeyPair();
+    const privateKey = '0x' + keyPair.getPrivate('hex');
     const address = computeAddress(privateKey)
     const publicKey = computePublicKey(privateKey, true)
     const net = typeof chainNameOrId === 'number' ? hexValue(chainNameOrId) : chainNameOrId
