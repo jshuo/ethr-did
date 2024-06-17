@@ -1,4 +1,4 @@
-import { createJWT, ES256KSigner, hexToBytes, JWTVerified, Signer as JWTSigner, verifyJWT } from 'did-jwt'
+import { createJWT, ES256KSigner, ES256Signer, hexToBytes, JWTVerified, Signer as JWTSigner, verifyJWT } from 'did-jwt'
 import { Signer as TxSigner } from '@ethersproject/abstract-signer'
 import { CallOverrides } from '@ethersproject/contracts'
 import { computeAddress } from '@ethersproject/transactions'
