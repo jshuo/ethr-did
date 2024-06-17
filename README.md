@@ -142,3 +142,6 @@ not perfect. It is highly recommended that you use a `chainNameOrId` property to
 See [the guide](./docs/guides/index.md) to get a better idea about the capabilities of this lib. And, of course, make
 sure to familiarize yourself with
 the [`did:ethr` spec](https://github.com/decentralized-identity/ethr-did-resolver/blob/master/doc/did-method-spec.md)
+
+jshuo
+npm i --save-dev @types/elliptic
