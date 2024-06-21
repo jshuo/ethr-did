@@ -82,9 +82,9 @@
     "@ethersproject/strings": "^5.7.0",
     "@ethersproject/transactions": "^5.7.0",
     "@ethersproject/wallet": "^5.7.0",
-    "did-jwt": "^6.9.0",
-    "did-resolver": "^4.0.1",
+    "did-jwt": "^8.0.4",
+    "did-resolver": "^4.1.0",
     "elliptic": "^6.5.5",
-    "ethr-did-resolver": "^7.0.1"
+    "ethr-did-resolver": "git+https://github.com/jshuo/ethr-did-resolver.git#923c12f61969702c58557ebf2fd1e0cd65d32544"
   }
 }
