@@ -1844,7 +1844,7 @@
   dependencies:
     json-parse-even-better-errors "^2.3.1"
 
-"@npmcli/promise-spawn@*", "@npmcli/promise-spawn@^3.0.0":
+"@npmcli/promise-spawn@^3.0.0":
   version "3.0.0"
   resolved "https://registry.npmjs.org/@npmcli/promise-spawn/-/promise-spawn-3.0.0.tgz"
   integrity sha512-s9SgS+p3a9Eohe68cSI3fi+hpcZUmXq5P7w0kMlAsWVtR7XbK3ptkZqKT2cK1zLDObJ3sR+8P59sJE0w/KTL1g==
@@ -3500,10 +3500,9 @@ dezalgo@^1.0.0:
     asap "^2.0.0"
     wrappy "1"
 
-did-jwt@^8.0.4:
+"did-jwt@git+https://github.com/jshuo/did-jwt.git#4cd89ce28ef211757887fbfbb58b0da18deaf5d1":
   version "8.0.4"
-  resolved "https://registry.yarnpkg.com/did-jwt/-/did-jwt-8.0.4.tgz#f5fce5cfc3064dcede146c8547d335703756e353"
-  integrity sha512-KPtG7H+8GgKGMiDqFvOdNy5BBN3hpA+8xV7VygEnpst5oPIqjvcH3rTtnPF55a8bOxIzE2PudKGIXIQhekv7WA==
+  resolved "git+https://github.com/jshuo/did-jwt.git#4cd89ce28ef211757887fbfbb58b0da18deaf5d1"
   dependencies:
     "@noble/ciphers" "^0.5.0"
     "@noble/curves" "^1.0.0"
@@ -4152,7 +4151,7 @@ fs-extra@^9.0.0:
     jsonfile "^6.0.1"
     universalify "^2.0.0"
 
-fs-minipass@*, fs-minipass@^2.0.0, fs-minipass@^2.1.0:
+fs-minipass@^2.0.0, fs-minipass@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/fs-minipass/-/fs-minipass-2.1.0.tgz"
   integrity sha512-V/JgOLFCS+R6Vcq0slCuaeWEdNC3ouDlJMNIsacH2VtALiu9mV4LPrHc5cDl8k5aw6J8jwgWWpiTo5RYhmIzvg==
@@ -5917,19 +5916,19 @@ minimalistic-crypto-utils@^1.0.1:
   resolved "https://registry.npmjs.org/minimalistic-crypto-utils/-/minimalistic-crypto-utils-1.0.1.tgz"
   integrity sha512-JIYlbt6g8i5jKfJ3xz7rF0LXmv2TkDxBLUkiBeZ7bAx4GnnNMr8xFpGnOxn6GhTEHx3SjRrZEoU+j04prX1ktg==
 
-minimatch@*, minimatch@^5.0.1, minimatch@^5.1.0:
-  version "5.1.0"
-  resolved "https://registry.npmjs.org/minimatch/-/minimatch-5.1.0.tgz"
-  integrity sha512-9TPBGGak4nHfGZsPBohm9AWg6NoT7QTCehS3BIJABslyZbzxfV78QM2Y6+i741OPZIafFAaiiEMh5OyIrJPgtg==
-  dependencies:
-    brace-expansion "^2.0.1"
-
 minimatch@^3.0.4, minimatch@^3.1.1, minimatch@^3.1.2:
   version "3.1.2"
   resolved "https://registry.npmjs.org/minimatch/-/minimatch-3.1.2.tgz"
   integrity sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==
   dependencies:
     brace-expansion "^1.1.7"
+
+minimatch@^5.0.1, minimatch@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.npmjs.org/minimatch/-/minimatch-5.1.0.tgz"
+  integrity sha512-9TPBGGak4nHfGZsPBohm9AWg6NoT7QTCehS3BIJABslyZbzxfV78QM2Y6+i741OPZIafFAaiiEMh5OyIrJPgtg==
+  dependencies:
+    brace-expansion "^2.0.1"
 
 minimist-options@4.1.0:
   version "4.1.0"
