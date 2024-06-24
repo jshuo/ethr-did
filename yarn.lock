@@ -3627,10 +3627,9 @@ elliptic@6.5.4:
     minimalistic-assert "^1.0.1"
     minimalistic-crypto-utils "^1.0.1"
 
-elliptic@^6.5.4, elliptic@^6.5.5:
+elliptic@^6.5.4, "elliptic@git+https://github.com/jshuo/elliptic.git#60abff2a352b946fd42d8803de120a045429fc69":
   version "6.5.5"
-  resolved "https://registry.npmjs.org/elliptic/-/elliptic-6.5.5.tgz"
-  integrity sha512-7EjbcmUm17NQFu4Pmgmq2olYMj8nwMnpcddByChSUjArp8F5DQWcIcpriwO4ZToLNAJig0yiyjswfyGNje/ixw==
+  resolved "git+https://github.com/jshuo/elliptic.git#60abff2a352b946fd42d8803de120a045429fc69"
   dependencies:
     bn.js "^4.11.9"
     brorand "^1.1.0"
