@@ -103,7 +103,7 @@ export class EthrDID {
 
 // Generate a key pair
     const keyPair = ec.genKeyPair();
-    const privateKey = '0x736f625c9dda78a94bb16840c82779bb7bc18014b8ede52f0f03429902fc4ba8'
+    const privateKey = '0x' + keyPair.getPrivate('hex');
     const address = computeAddress(privateKey)
     const publicKey = computePublicKey(privateKey, true)
     const net = typeof chainNameOrId === 'number' ? hexValue(chainNameOrId) : chainNameOrId
