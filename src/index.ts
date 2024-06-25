@@ -1,4 +1,4 @@
-import { createJWT, ES256KSigner, ES256Signer, hexToBytes, JWTVerified, Signer as JWTSigner, verifyJWT } from 'did-jwt'
+import { createJWT, ES256KSigner, ES256Signer, hexToBytes, JWTVerified, Signer as JWTSigner, verifyJWT, toEthereumAddress } from 'did-jwt'
 import { Signer as TxSigner } from '@ethersproject/abstract-signer'
 import { CallOverrides } from '@ethersproject/contracts'
 import { Provider } from '@ethersproject/providers'
@@ -9,14 +9,7 @@ import { Base58 } from '@ethersproject/basex'
 import { toUtf8Bytes } from '@ethersproject/strings'
 import { EthrDidController, interpretIdentifier, MetaSignature, REGISTRY } from 'ethr-did-resolver'
 import { Resolvable } from 'did-resolver'
-import { createHash } from 'crypto';
 import { ec as EC } from 'elliptic';
-// Function to compute Ethereum address from public key
-function computeAddress(publicKey: string): string {
-  const hash = createHash('sha256').update(publicKey.slice(2), 'hex').digest();
-  const address = createHash('rmd160').update(hash).digest('hex');
-  return `0x${address}`;
-}
 
 export enum DelegateTypes {
   veriKey = 'veriKey',
@@ -110,7 +103,7 @@ export class EthrDID {
       '736f625c9dda78a94bb16840c82779bb7bc18014b8ede52f0f03429902fc4ba8';
     const key = ec.keyFromPrivate(privateKey);
     const publicKey = key.getPublic().encode("hex", false);
-    const address = computeAddress(publicKey)
+    const address = toEthereumAddress(publicKey)
     const net = typeof chainNameOrId === 'number' ? hexValue(chainNameOrId) : chainNameOrId
     const identifier = net ? `did:ethr:${net}:${publicKey}` : publicKey
     return { address, privateKey, publicKey, identifier }
