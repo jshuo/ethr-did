@@ -85,6 +85,6 @@
     "did-jwt": "git+https://github.com/jshuo/did-jwt.git#aa924a2f2004c4e5f315095dc8ec9d56d5b08e5d",
     "did-resolver": "^4.1.0",
     "elliptic": "^6.5.5",
-    "ethr-did-resolver": "^6.2.3"
+    "ethr-did-resolver": "git+https://github.com/jshuo/ethr-did-resolver.git#1d87a6ee1d229c50f18a1115f3e1f894cd510743"
   }
 }
