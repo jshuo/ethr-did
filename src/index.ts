@@ -98,12 +98,12 @@ export class EthrDID {
 
   static createKeyPair(chainNameOrId?: string | number): KeyPair {
     const ec = new EC('p256'); // 'p256' is another name for secp256r1
-    var key = ec.genKeyPair();
-    const privateKey = '0x' + key.getPrivate('hex');
+    // var key = ec.genKeyPair();
+    // const privateKey = '0x' + key.getPrivate('hex');
     // hard code privatekey for fixing
-    // const privateKey =
-    //   '736f625c9dda78a94bb16840c82779bb7bc18014b8ede52f0f03429902fc4ba8';
-    // const key = ec.keyFromPrivate(privateKey);
+    const privateKey =
+      '736f625c9dda78a94bb16840c82779bb7bc18014b8ede52f0f03429902fc4ba8';
+    const key = ec.keyFromPrivate(privateKey);
 
     const publicKey = key.getPublic().encode("hex", false);
     const address = toEthereumAddress(publicKey)
