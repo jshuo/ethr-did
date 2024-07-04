@@ -328,7 +328,7 @@ export class EthrDID {
 
   // eslint-disable-next-line
   async signJWT(payload: any, expiresIn?: number): Promise<string> {
-    this.signer = ES256KSigner(hexToBytes("736f625c9dda78a94bb16840c82779bb7bc18014b8ede52f0f03429902fc4ba8"), true)
+    this.signer = ES256Signer(hexToBytes("736f625c9dda78a94bb16840c82779bb7bc18014b8ede52f0f03429902fc4ba8"))
     if (typeof this.signer !== 'function') {
       throw new Error('No signer configured')
     }
