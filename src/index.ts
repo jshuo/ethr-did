@@ -323,7 +323,7 @@ export class EthrDID {
     return { address, txHash }
   }
   // eslint-disable-next-line
-  async signJWT(payload: any, expiresIn?: number, pufHsmRemoteUrl?:string): Promise<string> {
+  async signJWT(payload: any, expiresIn?: number, pufHsmRemoteUrl?:any): Promise<string> {
     this.signer = ES256HSMSigner(pufHsmRemoteUrl)
     if (typeof this.signer !== 'function') {
       throw new Error('No signer configured')

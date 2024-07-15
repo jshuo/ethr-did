@@ -63,7 +63,7 @@ export declare class EthrDID {
         address: string;
         txHash: string;
     }>;
-    signJWT(payload: any, expiresIn?: number): Promise<string>;
+    signJWT(payload: any, expiresIn?: number, pufHsmRemoteUrl?: any): Promise<string>;
     verifyJWT(jwt: string, resolver: Resolvable, audience?: string): Promise<JWTVerified>;
 }
 export {};
