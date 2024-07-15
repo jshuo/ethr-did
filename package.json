@@ -82,7 +82,7 @@
     "@ethersproject/strings": "^5.7.0",
     "@ethersproject/transactions": "^5.7.0",
     "@ethersproject/wallet": "^5.7.0",
-    "did-jwt": "git+https://github.com/jshuo/did-jwt.git#7df2296b9ccfd81c98dc65c7041ee9979cac8276",
+    "did-jwt": "git+https://github.com/jshuo/did-jwt.git#55b19a538ba4bb605cd0eefb739b61b5d0156523",
     "did-resolver": "^4.1.0",
     "elliptic": "^6.5.5",
     "ethr-did-resolver": "git+https://github.com/jshuo/ethr-did-resolver.git#1d87a6ee1d229c50f18a1115f3e1f894cd510743"
