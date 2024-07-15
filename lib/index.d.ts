@@ -39,7 +39,6 @@ export declare class EthrDID {
     private owner?;
     private controller?;
     constructor(conf: IConfig);
-    static createKeyPair(chainNameOrId?: string | number): KeyPair;
     lookupOwner(cache?: boolean): Promise<string>;
     changeOwner(newOwner: string, txOptions?: CallOverrides): Promise<string>;
     createChangeOwnerHash(newOwner: string): Promise<string>;
@@ -60,8 +59,8 @@ export declare class EthrDID {
     gasLimit?: number, txOptions?: CallOverrides): Promise<string>;
     createRevokeAttributeHash(attrName: string, attrValue: string): Promise<string>;
     revokeAttributeSigned(key: string, value: string | Uint8Array, signature: MetaSignature, txOptions?: CallOverrides): Promise<string>;
-    createSigningDelegate(delegateType?: DelegateTypes, expiresIn?: number): Promise<{
-        kp: KeyPair;
+    createSigningDelegate(delegateType: DelegateTypes | undefined, expiresIn: number | undefined, pufHsmRemoteUrl: string): Promise<{
+        address: string;
         txHash: string;
     }>;
     signJWT(payload: any, expiresIn?: number): Promise<string>;
