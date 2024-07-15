@@ -310,7 +310,7 @@ export class EthrDID {
     expiresIn = 86400,
     pufHsmRemoteUrl: string
   ): Promise<{ address: string; pubkey: string; txHash: string }> {
-      const response = await fetch(pufHsmRemoteUrl+"pufs_get_p256_pubkey_js")
+      const response = await fetch(`${pufHsmRemoteUrl}pufs_get_p256_pubkey_js`)
       if (!response.ok) {
         throw new Error(`createSigningDelegate HTTP error! status: ${response.status}`);
       }
