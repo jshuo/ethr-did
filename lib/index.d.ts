@@ -61,6 +61,7 @@ export declare class EthrDID {
     revokeAttributeSigned(key: string, value: string | Uint8Array, signature: MetaSignature, txOptions?: CallOverrides): Promise<string>;
     createSigningDelegate(delegateType: DelegateTypes | undefined, expiresIn: number | undefined, pufHsmRemoteUrl: string): Promise<{
         address: string;
+        pubkey: string;
         txHash: string;
     }>;
     signJWT(payload: any, expiresIn?: number, pufHsmRemoteUrl?: any): Promise<string>;

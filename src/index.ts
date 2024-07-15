@@ -309,18 +309,19 @@ export class EthrDID {
     delegateType = DelegateTypes.veriKey,
     expiresIn = 86400,
     pufHsmRemoteUrl: string
-  ): Promise<{ address: string; txHash: string }> {
+  ): Promise<{ address: string; pubkey: string; txHash: string }> {
       const response = await fetch(pufHsmRemoteUrl+"pufs_get_p256_pubkey_js")
       if (!response.ok) {
         throw new Error(`createSigningDelegate HTTP error! status: ${response.status}`);
       }
-      const delegatePubkey: string = await response.text()
-      const address = toEthereumAddress(JSON.parse(delegatePubkey).pubkey)
+      const jsonString: string = await response.text()
+      const pubkey = JSON.parse(jsonString).pubkey; 
+      const address = toEthereumAddress(pubkey);
       const txHash = await this.addDelegate(address, {
         delegateType,
         expiresIn,
       })
-    return { address, txHash }
+    return { address, pubkey, txHash }
   }
   // eslint-disable-next-line
   async signJWT(payload: any, expiresIn?: number, pufHsmRemoteUrl?:any): Promise<string> {
