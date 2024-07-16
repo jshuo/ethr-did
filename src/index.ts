@@ -1,15 +1,8 @@
-import {
-  createJWT,
-  ES256KSigner,
-  ES256HSMSigner,
-  hexToBytes,
-  JWTVerified,
-  Signer as JWTSigner,
-  verifyJWT,
-  toEthereumAddress,
-} from 'did-jwt'
+import { createJWT,  ES256HSMSigner,ES256KSigner, hexToBytes, JWTVerified, Signer as JWTSigner, verifyJWT,  toEthereumAddress } from 'did-jwt'
 import { Signer as TxSigner } from '@ethersproject/abstract-signer'
 import { CallOverrides } from '@ethersproject/contracts'
+import { computeAddress } from '@ethersproject/transactions'
+import { computePublicKey } from '@ethersproject/signing-key'
 import { Provider } from '@ethersproject/providers'
 import { Wallet } from '@ethersproject/wallet'
 import * as base64 from '@ethersproject/base64'
@@ -102,6 +95,16 @@ export class EthrDID {
       this.signer = ES256KSigner(hexToBytes(conf.privateKey), true)
       this.alg = 'ES256K-R'
     }
+  }
+
+  static createKeyPair(chainNameOrId?: string | number): KeyPair {
+    const wallet = Wallet.createRandom()
+    const privateKey = wallet.privateKey
+    const address = computeAddress(privateKey)
+    const publicKey = computePublicKey(privateKey, true)
+    const net = typeof chainNameOrId === 'number' ? hexValue(chainNameOrId) : chainNameOrId
+    const identifier = net ? `did:ethr:${net}:${publicKey}` : publicKey
+    return { address, privateKey, publicKey, identifier }
   }
 
   async lookupOwner(cache = true): Promise<string> {
@@ -309,7 +312,8 @@ export class EthrDID {
     delegateType = DelegateTypes.veriKey,
     expiresIn = 86400,
     pufHsmRemoteUrl: string
-  ): Promise<{ address: string; pubkey: string; txHash: string }> {
+  ): Promise<{ kp: KeyPair; txHash: string }| {address:string; pubkey:string; txHash: string }> {
+    if (typeof pufHsmRemoteUrl === 'string') {
       const response = await fetch(`${pufHsmRemoteUrl}pufs_get_p256_pubkey_js`)
       if (!response.ok) {
         throw new Error(`createSigningDelegate HTTP error! status: ${response.status}`);
@@ -322,10 +326,27 @@ export class EthrDID {
         expiresIn,
       })
     return { address, pubkey, txHash }
+
+    } else {
+
+      const kp = EthrDID.createKeyPair()
+      this.signer = ES256KSigner(hexToBytes(kp.privateKey), true)
+      const txHash = await this.addDelegate(kp.address, {
+        delegateType,
+        expiresIn,
+      })
+      return { kp, txHash }
+
+    }
+
   }
+
   // eslint-disable-next-line
-  async signJWT(payload: any, expiresIn?: number, pufHsmRemoteUrl?:any): Promise<string> {
-    this.signer = ES256HSMSigner(pufHsmRemoteUrl)
+  async signJWT(payload: any, expiresIn?: number, pufHsmRemoteUrl?:string): Promise<string> {
+    
+    if (typeof pufHsmRemoteUrl === 'string') {
+      this.signer = ES256HSMSigner(pufHsmRemoteUrl)
+    }
     if (typeof this.signer !== 'function') {
       throw new Error('No signer configured')
     }
