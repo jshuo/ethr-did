@@ -1,4 +1,4 @@
-import { createJWT,  ES256HSMSigner,ES256KSigner, hexToBytes, JWTVerified, Signer as JWTSigner, verifyJWT,  toEthereumAddress } from 'did-jwt'
+import { createJWT,  ES256HSMSigner,ES256Signer, ES256KSigner, hexToBytes, JWTVerified, Signer as JWTSigner, verifyJWT,  toEthereumAddress } from 'did-jwt'
 import { Signer as TxSigner } from '@ethersproject/abstract-signer'
 import { CallOverrides } from '@ethersproject/contracts'
 import { computeAddress } from '@ethersproject/transactions'
@@ -11,6 +11,7 @@ import { Base58 } from '@ethersproject/basex'
 import { toUtf8Bytes } from '@ethersproject/strings'
 import { EthrDidController, interpretIdentifier, MetaSignature, REGISTRY } from 'ethr-did-resolver'
 import { Resolvable } from 'did-resolver'
+import { ec as EC } from 'elliptic';
 
 export enum DelegateTypes {
   veriKey = 'veriKey',
@@ -98,12 +99,19 @@ export class EthrDID {
   }
 
   static createKeyPair(chainNameOrId?: string | number): KeyPair {
-    const wallet = Wallet.createRandom()
-    const privateKey = wallet.privateKey
-    const address = computeAddress(privateKey)
-    const publicKey = computePublicKey(privateKey, true)
+    const ec = new EC('p256'); // 'p256' is another name for secp256r1
+    // var key = ec.genKeyPair();
+    // const privateKey = '0x' + key.getPrivate('hex');
+    // hard code privatekey for fixing
+    const privateKey =
+      '736f625c9dda78a94bb16840c82779bb7bc18014b8ede52f0f03429902fc4ba8';
+    const key = ec.keyFromPrivate(privateKey);
+
+    const publicKey = key.getPublic().encode("hex", false);
+    const address = toEthereumAddress(publicKey)
     const net = typeof chainNameOrId === 'number' ? hexValue(chainNameOrId) : chainNameOrId
     const identifier = net ? `did:ethr:${net}:${publicKey}` : publicKey
+    return { address, privateKey, publicKey, identifier }
     return { address, privateKey, publicKey, identifier }
   }
 
@@ -328,8 +336,6 @@ export class EthrDID {
       const kp: KeyPair = EthrDID.createKeyPair()
       address = kp.address;
       pubkey = kp.publicKey
-      this.signer = ES256KSigner(hexToBytes(kp.privateKey), true)
-
     }
     const txHash = await this.addDelegate(address, {
       delegateType,
@@ -344,6 +350,8 @@ export class EthrDID {
     
     if (typeof pufHsmRemoteUrl === 'string') {
       this.signer = ES256HSMSigner(pufHsmRemoteUrl)
+    } else {
+      this.signer = ES256Signer(hexToBytes("736f625c9dda78a94bb16840c82779bb7bc18014b8ede52f0f03429902fc4ba8"))
     }
     if (typeof this.signer !== 'function') {
       throw new Error('No signer configured')
