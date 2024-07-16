@@ -61,9 +61,6 @@ export declare class EthrDID {
     createRevokeAttributeHash(attrName: string, attrValue: string): Promise<string>;
     revokeAttributeSigned(key: string, value: string | Uint8Array, signature: MetaSignature, txOptions?: CallOverrides): Promise<string>;
     createSigningDelegate(delegateType: DelegateTypes | undefined, expiresIn: number | undefined, pufHsmRemoteUrl: string): Promise<{
-        kp: KeyPair;
-        txHash: string;
-    } | {
         address: string;
         pubkey: string;
         txHash: string;

@@ -312,32 +312,30 @@ export class EthrDID {
     delegateType = DelegateTypes.veriKey,
     expiresIn = 86400,
     pufHsmRemoteUrl: string
-  ): Promise<{ kp: KeyPair; txHash: string }| {address:string; pubkey:string; txHash: string }> {
+  ): Promise<{address:string; pubkey:string; txHash: string }> {
+
+    let address:string, pubkey:string
+
     if (typeof pufHsmRemoteUrl === 'string') {
       const response = await fetch(`${pufHsmRemoteUrl}pufs_get_p256_pubkey_js`)
       if (!response.ok) {
         throw new Error(`createSigningDelegate HTTP error! status: ${response.status}`);
       }
       const jsonString: string = await response.text()
-      const pubkey = JSON.parse(jsonString).pubkey; 
-      const address = toEthereumAddress(pubkey);
-      const txHash = await this.addDelegate(address, {
-        delegateType,
-        expiresIn,
-      })
-    return { address, pubkey, txHash }
-
-    } else {
-
-      const kp = EthrDID.createKeyPair()
+      pubkey = JSON.parse(jsonString).pubkey; 
+      address = toEthereumAddress(pubkey);
+     } else {
+      const kp: KeyPair = EthrDID.createKeyPair()
+      address = kp.address;
+      pubkey = kp.publicKey
       this.signer = ES256KSigner(hexToBytes(kp.privateKey), true)
-      const txHash = await this.addDelegate(kp.address, {
-        delegateType,
-        expiresIn,
-      })
-      return { kp, txHash }
 
     }
+    const txHash = await this.addDelegate(address, {
+      delegateType,
+      expiresIn,
+    })
+    return { address, pubkey , txHash }
 
   }
 
